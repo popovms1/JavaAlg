@@ -1,0 +1,19 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Введите число: ");
+        int number = input.nextInt();
+
+        int sqrtNumber = (int) Math.sqrt(number);
+        int sqDiffPrev = number - sqrtNumber * sqrtNumber;
+        int sqDiffNext = (sqrtNumber + 1) * (sqrtNumber + 1) - number;
+
+        if (sqDiffPrev <= sqDiffNext) {
+            System.out.println("Число квадрат, ближайший к " + number + ": " + (sqrtNumber * sqrtNumber));
+        } else {
+            System.out.println("Число квадрат, ближайший к " + number + ": " + ((sqrtNumber + 1) * (sqrtNumber + 1)));
+        }
+    }
+}
