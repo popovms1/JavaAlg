@@ -1,0 +1,18 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Введите числа через пробел: ");
+        String numbersStr = input.nextLine();
+        String[] numbers = numbersStr.split(" ");
+
+        int sum = 0;
+        for (String number : numbers) {
+            int num = Integer.parseInt(number);
+            sum += Math.pow(num, 2);
+        }
+
+        System.out.println("Сумма квадратов введенных чисел: " + sum);
+    }
+}
