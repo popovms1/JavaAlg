@@ -1,0 +1,23 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Введите координаты трех точек в формате: [4, 6], [12, 4], [10, 10]");
+        String input = scanner.nextLine();
+        input = input.replaceAll("[^0-9,]","").trim();
+        String[] values = input.split(",");
+        double x1 = Double.parseDouble(values[0]);
+        double y1 = Double.parseDouble(values[1]);
+        double x2 = Double.parseDouble(values[2]);
+        double y2 = Double.parseDouble(values[3]);
+        double x3 = Double.parseDouble(values[4]);
+        double y3 = Double.parseDouble(values[5]);
+
+        double x = (x1 + x2 + x3) / 3;
+        double y = (y1 + y2 + y3) / 3;
+
+        System.out.printf("Барицентр треугольника: {%.4f, %.4f}", x, y);
+    }
+}
