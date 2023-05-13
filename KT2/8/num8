@@ -1,0 +1,20 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Введите три отрезка через пробел: ");
+        int a = input.nextInt();
+        int b = input.nextInt();
+        int c = input.nextInt();
+
+        if (a + b > c && b + c > a && a + c > b) {
+            double cosA = (b * b + c * c - a * a) / (2.0 * b * c);
+            double rad = Math.acos(cosA);
+            double deg = Math.toDegrees(rad);
+            System.out.println("Наибольший внешний угол треугольника равен " + deg + " градусов");
+        } else {
+            System.out.println("Невозможно составить треугольник из введенных отрезков");
+        }
+    }
+}
