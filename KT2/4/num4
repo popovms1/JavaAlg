@@ -1,0 +1,21 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Введите строку для поиска: ");
+        String text = scanner.nextLine();
+        System.out.println("Введите символ для поиска: ");
+        String symbolString = scanner.nextLine();
+        char symbol = symbolString.charAt(0);
+
+        int count = 0;
+        for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i) == symbol) {
+                count++;
+            }
+        }
+        System.out.println("Количество вхождений символа в строку: " + count);
+    }
+}
