@@ -1,0 +1,28 @@
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите размер массива: ");
+        int n = scanner.nextInt();
+        int[] array = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            System.out.print("Введите " + (i + 1) + " элемент массива: ");
+            array[i] = scanner.nextInt();
+        }
+
+        int maxIndex = 0;
+        for (int i = 1; i < n; i++) {
+            if (array[i] > array[maxIndex]) {
+                maxIndex = i;
+            }
+        }
+
+        int[] leftArray = Arrays.copyOfRange(array, 0, maxIndex);
+        int[] rightArray = Arrays.copyOfRange(array, maxIndex + 1, n);
+
+        System.out.println("Максимальное значение: " + array[maxIndex]);
+        System.out.println("Элементы слева от максимального значения: " + Arrays.toString(leftArray));
+        System.out.println("Элементы справа от максимального значения: " + Arrays.toString(rightArray));
+    }
+}
