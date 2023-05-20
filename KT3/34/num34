@@ -1,0 +1,36 @@
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class Main {
+    public static void main(String[] args) {
+        String input = "56 65 74 100 99 68 86 180 90";
+        String[] weights = input.split(" ");
+
+        Arrays.sort(weights, new WeightComparator());
+
+        System.out.println("Отсортированный список весов: " + String.join(" ", weights));
+    }
+
+    private static class WeightComparator implements Comparator<String> {
+        @Override
+        public int compare(String s1, String s2) {
+            int sum1 = calculateSumOfDigits(Integer.parseInt(s1));
+            int sum2 = calculateSumOfDigits(Integer.parseInt(s2));
+
+            if (sum1 == sum2) {
+                return Integer.compare(Integer.parseInt(s2), Integer.parseInt(s1));
+            }
+
+            return Integer.compare(sum2, sum1);
+        }
+
+        private int calculateSumOfDigits(int number) {
+            int sum = 0;
+            while (number > 0) {
+                sum += number % 10;
+                number /= 10;
+            }
+            return sum;
+        }
+    }
+}
