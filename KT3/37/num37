@@ -1,0 +1,38 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        int totalPlayers = 7; // Количество игроков
+        int startingPlayer = 1; // Игрок с которого начинается игра
+
+        List<Integer> players = new ArrayList<>();
+        for (int i = 1; i <= totalPlayers; i++) {
+            players.add(i);
+        }
+
+        List<Integer> result = playGame(players, startingPlayer);
+
+        System.out.println(result);
+    }
+
+    private static List<Integer> playGame(List<Integer> players, int startingPlayer) {
+        List<Integer> result = new ArrayList<>();
+        int count = 0;
+        int index = startingPlayer - 1;
+
+        while (players.size() > 1) {
+            count++;
+            if (count % 3 == 0) {
+                result.add(players.get(index));
+                players.remove(index);
+            } else {
+                index = (index + 1) % players.size();
+            }
+        }
+
+        result.add(players.get(0)); // Добавляем победителя
+
+        return result;
+    }
+}
