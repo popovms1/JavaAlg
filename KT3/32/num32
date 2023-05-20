@@ -1,0 +1,12 @@
+public class Main {
+    public static void main(String[] args) {
+        long n = 10;
+
+        boolean canWin = canWinGame(n);
+        System.out.println("Может ли Саша выиграть игру? " + canWin);
+    }
+
+    private static boolean canWinGame(long n) {
+        return n % 2 == 0;
+    }
+}
