@@ -1,0 +1,26 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int m = scanner.nextInt();
+        int n = scanner.nextInt();
+        int product = 1;
+        while (scanner.hasNextInt()) {
+            product *= scanner.nextInt();
+        }
+        int sum = 0;
+        for (int i = m; i <= n; i++) {
+            boolean divisible = true;
+            for (int j = 2; j <= product && divisible; j++) {
+                if (product % j == 0 && i % j != 0) {
+                    divisible = false;
+                }
+            }
+            if (divisible) {
+                sum += i;
+            }
+        }
+        System.out.println(sum);
+    }
+}
