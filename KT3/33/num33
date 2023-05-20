@@ -1,0 +1,16 @@
+public class Main {
+    public static void main(String[] args) {
+        long n = 10;
+
+        long tanyaSticks = calculateTanyaSticks(n);
+        System.out.println("Количество палочек у Тани: " + tanyaSticks);
+    }
+
+    private static long calculateTanyaSticks(long n) {
+        if (n % 2 == 0) {
+            return n / 2;
+        } else {
+            return (n - 1) / 2;
+        }
+    }
+}
