@@ -1,0 +1,84 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Main {
+    public static void main(String[] args) {
+        try {
+            // Получение текста с сайта
+            String url = "https://fish-text.ru/get?format=text&number=10000";
+            String text = getTextFromUrl(url);
+
+            // Формирование словаря частот символов
+            Map<Character, Integer> charFrequencies = calculateCharFrequencies(text);
+
+            // Нахождение сдвига алгоритма Цезаря
+            int shift = findCesarShift(charFrequencies);
+
+            // Расшифровка текста
+            String decryptedText = decryptCesar(text, shift);
+
+            System.out.println("Расшифрованный текст:");
+            System.out.println(decryptedText);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String getTextFromUrl(String url) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        URL website = new URL(url);
+        BufferedReader in = new BufferedReader(new InputStreamReader(website.openStream()));
+        String inputLine;
+
+        while ((inputLine = in.readLine()) != null) {
+            sb.append(inputLine);
+            sb.append(System.lineSeparator());
+        }
+
+        in.close();
+
+        return sb.toString();
+    }
+
+    private static Map<Character, Integer> calculateCharFrequencies(String text) {
+        Map<Character, Integer> charFrequencies = new HashMap<>();
+
+        for (char c : text.toCharArray()) {
+            charFrequencies.put(c, charFrequencies.getOrDefault(c, 0) + 1);
+        }
+
+        return charFrequencies;
+    }
+
+    private static int findCesarShift(Map<Character, Integer> charFrequencies) {
+        char mostFrequentChar = ' ';
+        int maxFrequency = 0;
+
+        for (Map.Entry<Character, Integer> entry : charFrequencies.entrySet()) {
+            if (entry.getValue() > maxFrequency) {
+                maxFrequency = entry.getValue();
+                mostFrequentChar = entry.getKey();
+            }
+        }
+
+        int shift = mostFrequentChar - ' ';
+
+        return shift;
+    }
+
+    private static String decryptCesar(String text, int shift) {
+        StringBuilder decryptedText = new StringBuilder();
+
+        for (char c : text.toCharArray()) {
+            if (Character.isLetter(c)) {
+                c = (char) ((c - shift - 'A' + 26) % 26 + 'A');
+            }
+            decryptedText.append(c);
+        }
+
+        return decryptedText.toString();
+    }
+}
