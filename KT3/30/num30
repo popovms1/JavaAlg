@@ -1,0 +1,56 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        List<Integer> cities = new ArrayList<>();
+        cities.add(50);
+        cities.add(55);
+        cities.add(57);
+        cities.add(58);
+        cities.add(60);
+
+        int targetSum = 175;
+        int numCities = 3;
+
+        int maxSum = findMaxSum(cities, targetSum, numCities);
+        System.out.println(maxSum);
+    }
+
+    private static int findMaxSum(List<Integer> cities, int targetSum, int numCities) {
+        int maxSum = -1;
+        int[] indices = new int[numCities];
+        int n = cities.size();
+
+        for (int i = 0; i < numCities; i++) {
+            indices[i] = i;
+        }
+
+        while (true) {
+            int sum = 0;
+            for (int index : indices) {
+                sum += cities.get(index);
+            }
+
+            if (sum <= targetSum && sum > maxSum) {
+                maxSum = sum;
+            }
+
+            int nextIndex = numCities - 1;
+            while (nextIndex >= 0 && indices[nextIndex] == n - numCities + nextIndex) {
+                nextIndex--;
+            }
+
+            if (nextIndex < 0) {
+                break;
+            }
+
+            indices[nextIndex]++;
+            for (int i = nextIndex + 1; i < numCities; i++) {
+                indices[i] = indices[i - 1] + 1;
+            }
+        }
+
+        return maxSum;
+    }
+}
