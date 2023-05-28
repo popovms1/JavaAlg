@@ -1,0 +1,27 @@
+public class Main {
+    public static void main(String[] args) {
+        int years = 2023;
+
+        String romanYears = convertToRoman(years);
+        System.out.println(romanYears);
+    }
+
+    private static String convertToRoman(int years) {
+        String[] romanNumerals = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        int[] arabicValues = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+
+        while (years > 0) {
+            if (years >= arabicValues[i]) {
+                sb.append(romanNumerals[i]);
+                years -= arabicValues[i];
+            } else {
+                i++;
+            }
+        }
+
+        return sb.toString();
+    }
+}
