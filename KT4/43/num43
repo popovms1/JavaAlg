@@ -1,0 +1,28 @@
+public class Main {
+    public static void main(String[] args) {
+        int[][] pyramid = {
+                {3},
+                {7, 4},
+                {2, 4, 6},
+                {8, 5, 9, 3}
+        };
+        int maxSum = getMaxSlideSum(pyramid);
+        System.out.println(maxSum);
+    }
+
+    private static int getMaxSlideSum(int[][] pyramid) {
+        int n = pyramid.length;
+
+        for (int i = n - 2; i >= 0; i--) {
+            for (int j = 0; j <= i; j++) {
+                int left = pyramid[i + 1][j];
+                int right = pyramid[i + 1][j + 1];
+                int current = pyramid[i][j];
+
+                pyramid[i][j] = Math.max(current + left, current + right);
+            }
+        }
+
+        return pyramid[0][0];
+    }
+}
