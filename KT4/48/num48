@@ -1,0 +1,32 @@
+import java.util.HashSet;
+import java.util.Set;
+
+public class Main {
+    public static void main(String[] args) {
+        int x = 5;
+        int[] series = generateSeries(x);
+        for (int num : series) {
+            System.out.print(num + " ");
+        }
+    }
+
+    public static int[] generateSeries(int x) {
+        Set<Integer> uniqueNumbers = new HashSet<>();
+        uniqueNumbers.add(1);
+
+        for (int i = 1; i <= x; i++) {
+            int y = 2 * i + 1;
+            int z = 3 * i + 1;
+            uniqueNumbers.add(y);
+            uniqueNumbers.add(z);
+        }
+
+        int[] series = new int[uniqueNumbers.size()];
+        int index = 0;
+        for (int num : uniqueNumbers) {
+            series[index++] = num;
+        }
+
+        return series;
+    }
+}
