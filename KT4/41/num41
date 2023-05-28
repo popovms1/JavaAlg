@@ -1,0 +1,36 @@
+import java.util.concurrent.TimeUnit;
+
+public class Main {
+    public static void main(String[] args) {
+        int seconds = 3662;
+        String time = formatTime(seconds);
+        System.out.println(time);
+    }
+
+    private static String formatTime(int seconds) {
+        long years = TimeUnit.SECONDS.toDays(seconds) / 365;
+        long days = TimeUnit.SECONDS.toDays(seconds) % 365;
+        long hours = TimeUnit.SECONDS.toHours(seconds) % 24;
+        long minutes = TimeUnit.SECONDS.toMinutes(seconds) % 60;
+        long remainingSeconds = seconds % 60;
+
+        StringBuilder formattedTime = new StringBuilder();
+
+        if (years > 0) {
+            formattedTime.append(years).append(years == 1 ? " год" : (years < 5 ? " года" : " лет")).append(", ");
+        }
+        if (days > 0) {
+            formattedTime.append(days).append(days == 1 ? " день" : (days < 5 ? " дня" : " дней")).append(", ");
+        }
+        if (hours > 0) {
+            formattedTime.append(hours).append(hours == 1 ? " час" : (hours < 5 ? " часа" : " часов")).append(", ");
+        }
+        if (minutes > 0) {
+            formattedTime.append(minutes).append(minutes == 1 ? " минута" : (minutes < 5 ? " минуты" : " минут")).append(" и ");
+        }
+
+        formattedTime.append(remainingSeconds).append(remainingSeconds == 1 ? " секунда" : (remainingSeconds < 5 ? " секунды" : " секунд"));
+
+        return formattedTime.toString();
+    }
+}
