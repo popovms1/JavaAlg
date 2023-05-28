@@ -1,0 +1,19 @@
+public class Main {
+    public static void main(String[] args) {
+        // Вызываем функцию func с аргументом 10 и выводим результат на консоль
+        int result = func(10);
+        System.out.println("Результат: " + result);
+    }
+
+    public static int func(int n) {
+        if (n == 0) {
+            return 0;
+        } else if (n == 1) {
+            return 1;
+        } else if (n % 2 == 0) {
+            return func(n / 2);
+        } else {
+            return func(n / 2) + func(n - n / 2);
+        }
+    }
+}
