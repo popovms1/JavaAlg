@@ -1,0 +1,45 @@
+public class Main {
+    public static void main(String[] args) {
+        int number = 523;
+
+        int nextGreaterNumber = findNextGreaterNumber(number);
+
+        System.out.println(nextGreaterNumber);
+    }
+
+    private static int findNextGreaterNumber(int number) {
+        char[] digits = String.valueOf(number).toCharArray();
+        int n = digits.length;
+
+        // Находим самую правую цифру, которую можно заменить
+        int i;
+        for (i = n - 1; i > 0; i--) {
+            if (digits[i] > digits[i - 1]) {
+                break;
+            }
+        }
+
+        // Если такой цифры нет, возвращаем -1
+        if (i == 0) {
+            return -1;
+        }
+
+        // Находим наименьшую цифру, большую найденной цифры, справа от нее
+        int x = digits[i - 1], smallest = i;
+        for (int j = i + 1; j < n; j++) {
+            if (digits[j] > x && digits[j] < digits[smallest]) {
+                smallest = j;
+            }
+        }
+
+        // Меняем найденные цифры местами
+        char temp = digits[i - 1];
+        digits[i - 1] = digits[smallest];
+        digits[smallest] = temp;
+
+        // Сортируем оставшиеся цифры после измененной цифры в порядке возрастания
+        Arrays.sort(digits, i, n);
+
+        return Integer.parseInt(new String(digits));
+    }
+}
