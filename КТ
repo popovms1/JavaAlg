@@ -1,0 +1,110 @@
+import java.io.*;
+import java.util.*;
+import java.util.regex.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String equation = scanner.nextLine();
+        double result = evaluateEquation(equation);
+        System.out.println(result);
+    }
+
+    public static double evaluateEquation(String equation) {
+        double result = 0.0;
+        try {
+            result = eval(equation);
+            saveEquation(equation, result); // Сохранение уравнения и результата
+        } catch (Exception e) {
+            System.out.println("Ошибка при вычислении уравнения: " + equation);
+        }
+        return result;
+    }
+
+    public static double eval(String equation) {
+        equation = equation.replaceAll("\\s+", ""); // Удаление всех пробелов из уравнения
+
+        Pattern pattern = Pattern.compile("[()*/%+-^]|\\d+\\.?\\d*"); // Регулярное выражение для поиска операторов и чисел
+        Matcher matcher = pattern.matcher(equation);
+
+        List<String> tokens = new ArrayList<>();
+
+        while (matcher.find()) {
+            tokens.add(matcher.group());
+        }
+
+        Stack<Double> numbers = new Stack<>();
+        Stack<String> operators = new Stack<>();
+
+        for (String token : tokens) {
+            if (token.matches("\\d+\\.?\\d*")) {
+                numbers.push(Double.parseDouble(token));
+            } else if (token.equals("(")) {
+                operators.push(token);
+            } else if (token.equals(")")) {
+                while (!operators.peek().equals("(")) {
+                    double num2 = numbers.pop();
+                    double num1 = numbers.pop();
+                    String operator = operators.pop();
+                    numbers.push(applyOperator(num1, num2, operator));
+                }
+                operators.pop(); // Удаление открывающей скобки "("
+            } else {
+                while (!operators.empty() && hasPrecedence(token, operators.peek())) {
+                    double num2 = numbers.pop();
+                    double num1 = numbers.pop();
+                    String operator = operators.pop();
+                    numbers.push(applyOperator(num1, num2, operator));
+                }
+                operators.push(token);
+            }
+        }
+
+        while (!operators.empty()) {
+            double num2 = numbers.pop();
+            double num1 = numbers.pop();
+            String operator = operators.pop();
+            numbers.push(applyOperator(num1, num2, operator));
+        }
+
+        return numbers.pop();
+    }
+
+    public static double applyOperator(double num1, double num2, String operator) {
+        switch (operator) {
+            case "+":
+                return num1 + num2;
+            case "-":
+                return num1 - num2;
+            case "*":
+                return num1 * num2;
+            case "/":
+                return num1 / num2;
+            case "//":
+                return (int) (num1 / num2);
+            case "%":
+                return num1 % num2;
+            case "^":
+                return Math.pow(num1, num2);
+            default:
+                throw new IllegalArgumentException("Недопустимый оператор: " + operator);
+        }
+    }
+
+    public static boolean hasPrecedence(String op1, String op2) {
+        if (op2.equals("(") || op2.equals(")")) {
+            return false;
+        }
+        return !((op1.equals("*") || op1.equals("/") || op1.equals("//") || op1.equals("%")) && (op2.equals("+") || op2.equals("-")));
+    }
+
+    public static void saveEquation(String equation, double result) {
+        try {
+            FileWriter writer = new FileWriter("history.txt", true);
+            writer.write(equation + " = " + result + "\n");
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Ошибка при сохранении уравнения: " + equation);
+        }
+    }
+}
