@@ -1,1 +1,31 @@
 
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        try {
+            String str = scanner.nextLine();
+            int shift = scanner.nextInt();
+            scanner.nextLine(); // Добавлен вызов scanner.nextLine() для чтения символа новой строки
+            boolean reverse = scanner.nextBoolean();
+            scanner.nextLine(); // Добавлен вызов scanner.nextLine() для чтения символа новой строки
+            StringBuilder result = new StringBuilder();
+            for (char c : str.toCharArray()) {
+                if (Character.isLetter(c)) {
+                    char base = Character.isLowerCase(c) ? 'a' : 'A';
+                    char shifted = (char) (base + (c - base + shift) % 26);
+                    result.append(shifted);
+                } else {
+                    result.append(c);
+                }
+            }
+            if (reverse) {
+                result.reverse();
+            }
+            System.out.println(result);
+        } catch (Exception e) {
+            System.out.println("Ошибка ввода данных");
+        }
+    }
+}
